@@ -4,23 +4,22 @@ targetDir="target"
 
 Build(){
     #location of java and  class files 
-    srcDir="src"
-    classDir="../$targetDir"
+    directory=$(find . -name "*.java" | head -1)
+    srcDir=$(echo "$directory" | cut -d "/" -f2)
+    classDir="./$targetDir"
     java_file_loc="*/*.java"
-
-    cd $srcDir
-
+    
     #if directory exist, delete and re-create
     if [ -d "$classDir" ]; then
-        rm -r $classDir
+        Clean
     fi
+
     mkdir $classDir
 
     #Create the java class files
     find . -name "*.java" >sources.txt
     javac -d $classDir -cp . @sources.txt
     rm sources.txt
-    cd ..
 }
 
 
